@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - 16
+
+services:
+  - docker
+
+# Pre testing installs
+install:
+  - echo "no installs needed"
+
+before_script:
+  - echo "no tests"
+
+script:
+  - docker --version
+  - docker build -t simple-node-ii
+  - docker tag simple-node-ii afrojedi/simple-node-ii
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push afrojedi/simple-node-ii
